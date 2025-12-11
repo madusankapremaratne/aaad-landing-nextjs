@@ -1,0 +1,11 @@
+# Robots.txt for AAAD - Android Auto Apps Downloader
+# https://aaad.app
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://aaad.app/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
