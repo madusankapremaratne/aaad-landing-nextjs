@@ -22,6 +22,9 @@ export const metadata: Metadata = {
     description: 'Learn how to install third-party apps on Android Auto with our comprehensive guides and tutorials.',
     url: 'https://aaad.app/blog',
   },
+  alternates: {
+    canonical: 'https://aaad.app/blog',
+  },
 }
 
 // Android Icon component
