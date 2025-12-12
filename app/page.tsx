@@ -57,12 +57,12 @@ const TelegramIcon = () => (
 
 // Apps data
 const featuredApps = [
-  { name: 'CarStream', description: 'Watch YouTube videos on Android Auto', icon: '📺' },
-  { name: 'Fermata Auto', description: 'Play local videos and IPTV streams', icon: '🎬' },
-  { name: 'Screen2Auto', description: 'Mirror your phone screen', icon: '📱' },
-  { name: 'AA Mirror Plus', description: 'Advanced screen mirroring', icon: '🔄' },
-  { name: 'Performance Monitor', description: 'Real-time vehicle diagnostics', icon: '📊' },
-  { name: 'AA Passenger', description: 'Additional controls for passengers', icon: '👥' },
+  { name: 'CarStream', description: 'Watch YouTube videos on Android Auto', icon: '📺', slug: 'carstream' },
+  { name: 'Fermata Auto', description: 'Play local videos and IPTV streams', icon: '🎬', slug: 'fermata-auto' },
+  { name: 'Screen2Auto', description: 'Mirror your phone screen', icon: '📱', slug: 'screen2auto' },
+  { name: 'AA Mirror Plus', description: 'Advanced screen mirroring', icon: '🔄', slug: 'aa-mirror-plus' },
+  { name: 'Performance Monitor', description: 'Real-time vehicle diagnostics', icon: '📊', slug: 'performance-monitor' },
+  { name: 'AA Passenger', description: 'Additional controls for passengers', icon: '👥', slug: 'aa-passenger' },
 ]
 
 const features = [
@@ -305,19 +305,33 @@ export default function Home() {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredApps.map((app) => (
-              <article key={app.name} className="card group cursor-pointer">
+            {featuredApps.map((app) => {
+              const CardContent = () => (
                 <div className="flex items-start gap-4">
                   <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">
                     {app.icon}
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold mb-1">{app.name}</h3>
+                    <h3 className="text-lg font-bold mb-1 group-hover:text-[#3DDC84] transition-colors">{app.name}</h3>
                     <p className="text-sm text-gray-400">{app.description}</p>
                   </div>
                 </div>
-              </article>
-            ))}
+              )
+
+              if (app.slug) {
+                return (
+                  <Link key={app.name} href={`/apps/${app.slug}`} className="card group cursor-pointer hover:border-[#3DDC84]/50 transition-colors">
+                    <CardContent />
+                  </Link>
+                )
+              }
+
+              return (
+                <article key={app.name} className="card group cursor-pointer">
+                  <CardContent />
+                </article>
+              )
+            })}
           </div>
 
           <div className="text-center mt-12">
