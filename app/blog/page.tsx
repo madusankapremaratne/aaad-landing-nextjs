@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import { getAllPosts } from '@/lib/blog'
+import { client } from '@/sanity/lib/client'
+import { POSTS_QUERY } from '@/sanity/lib/queries'
 
 export const metadata: Metadata = {
   title: 'Blog - Android Auto Tips, Guides & News',
@@ -34,67 +35,11 @@ const AndroidIcon = () => (
   </svg>
 )
 
-// Sample blog posts for demonstration (these would come from your content folder)
-const samplePosts = [
-  {
-    slug: 'how-to-install-third-party-apps-android-auto',
-    title: 'How to Install Third-Party Apps on Android Auto Without Root in 2025',
-    excerpt: 'Complete guide to installing third-party apps like CarStream, Fermata Auto, and Screen2Auto on Android Auto using AAAD without rooting your device.',
-    date: '2025-01-15',
-    category: 'Guides',
-    readTime: '8 min read',
-    featured: true,
-  },
-  {
-    slug: 'best-android-auto-third-party-apps',
-    title: 'Best Third-Party Apps for Android Auto: Complete 2025 Guide',
-    excerpt: 'Discover the best third-party apps you can install on Android Auto, including video players, screen mirroring, and performance monitors.',
-    date: '2025-01-10',
-    category: 'Reviews',
-    readTime: '12 min read',
-    featured: true,
-  },
-  {
-    slug: 'carstream-setup-guide',
-    title: 'CarStream Setup Guide: Watch YouTube on Android Auto',
-    excerpt: 'Step-by-step tutorial to install and configure CarStream for watching YouTube videos on your Android Auto display.',
-    date: '2025-01-05',
-    category: 'Tutorials',
-    readTime: '6 min read',
-    featured: false,
-  },
-  {
-    slug: 'android-auto-no-root-vs-root-methods',
-    title: 'Android Auto Customization: No-Root vs Root Methods Compared',
-    excerpt: 'Compare different methods for customizing Android Auto, including AAAD, AA AIO Tweaker, and manual ADB methods.',
-    date: '2024-12-28',
-    category: 'Guides',
-    readTime: '10 min read',
-    featured: false,
-  },
-  {
-    slug: 'fix-android-auto-third-party-apps-not-showing',
-    title: 'Fix: Android Auto Third-Party Apps Not Showing Up',
-    excerpt: 'Troubleshooting guide for common issues when installed apps do not appear in Android Auto, including fixes for OnePlus, Pixel, and Samsung devices.',
-    date: '2024-12-20',
-    category: 'Troubleshooting',
-    readTime: '7 min read',
-    featured: false,
-  },
-  {
-    slug: 'fermata-auto-complete-guide',
-    title: 'Fermata Auto: Complete Guide to Videos & IPTV on Android Auto',
-    excerpt: 'Everything you need to know about Fermata Auto, the open-source media player for Android Auto supporting local videos and IPTV streams.',
-    date: '2024-12-15',
-    category: 'Tutorials',
-    readTime: '9 min read',
-    featured: false,
-  },
-]
+export default async function BlogPage() {
+  const posts = await client.fetch(POSTS_QUERY)
 
-export default function BlogPage() {
-  const featuredPosts = samplePosts.filter(p => p.featured)
-  const regularPosts = samplePosts.filter(p => !p.featured)
+  const featuredPosts = posts.filter((p: any) => p.featured)
+  const regularPosts = posts.filter((p: any) => !p.featured)
 
   return (
     <main className="min-h-screen">
@@ -160,8 +105,8 @@ export default function BlogPage() {
           <div className="max-w-7xl mx-auto">
             <h2 className="text-2xl font-bold mb-8">Featured Articles</h2>
             <div className="grid md:grid-cols-2 gap-8">
-              {featuredPosts.map((post) => (
-                <article key={post.slug} className="card group relative overflow-hidden">
+              {featuredPosts.map((post: any) => (
+                <article key={post.slug.current} className="card group relative overflow-hidden">
                   <div className="absolute top-4 right-4">
                     <span className="px-3 py-1 rounded-full text-xs font-medium bg-[#3DDC84]/20 text-[#3DDC84]">
                       Featured
@@ -169,17 +114,18 @@ export default function BlogPage() {
                   </div>
                   <div className="mb-4">
                     <span className="text-xs text-[#3DDC84] font-medium uppercase tracking-wider">
-                      {post.category}
+                      {post.categories?.[0] || 'Article'}
                     </span>
                   </div>
                   <h3 className="text-2xl font-bold mb-3 group-hover:text-[#3DDC84] transition-colors">
-                    <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                    <Link href={`/blog/${post.slug.current}`}>{post.title}</Link>
                   </h3>
                   <p className="text-gray-400 mb-4 line-clamp-2">{post.excerpt}</p>
                   <div className="flex items-center gap-4 text-sm text-gray-500">
-                    <span>{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-                    <span>•</span>
-                    <span>{post.readTime}</span>
+                    {post.publishedAt && <span>{new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>}
+                    {post.publishedAt && <span>•</span>}
+                    {/* Placeholder for read time */}
+                    <span>5 min read</span>
                   </div>
                 </article>
               ))}
@@ -193,21 +139,21 @@ export default function BlogPage() {
         <div className="max-w-7xl mx-auto">
           <h2 className="text-2xl font-bold mb-8">All Articles</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {regularPosts.map((post) => (
-              <article key={post.slug} className="card group">
+            {regularPosts.map((post: any) => (
+              <article key={post.slug.current} className="card group">
                 <div className="mb-4">
                   <span className="text-xs text-[#3DDC84] font-medium uppercase tracking-wider">
-                    {post.category}
+                     {post.categories?.[0] || 'Article'}
                   </span>
                 </div>
                 <h3 className="text-xl font-bold mb-3 group-hover:text-[#3DDC84] transition-colors line-clamp-2">
-                  <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                  <Link href={`/blog/${post.slug.current}`}>{post.title}</Link>
                 </h3>
                 <p className="text-gray-400 mb-4 text-sm line-clamp-3">{post.excerpt}</p>
                 <div className="flex items-center gap-4 text-xs text-gray-500">
-                  <span>{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-                  <span>•</span>
-                  <span>{post.readTime}</span>
+                  {post.publishedAt && <span>{new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>}
+                  {post.publishedAt && <span>•</span>}
+                  <span>5 min read</span>
                 </div>
               </article>
             ))}

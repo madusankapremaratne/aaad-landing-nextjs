@@ -1,3 +1,7 @@
 /.next
 /node_modules
 /out
+.env.local
+SEO-STRATEGY.md
+SEO_Plan_AAAD.pdf
+generate_seo_pdf.py

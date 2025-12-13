@@ -4,51 +4,42 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { PortableText } from '@portabletext/react'
 import { client } from '@/sanity/lib/client'
-import { POST_QUERY, POSTS_QUERY } from '@/sanity/lib/queries'
+import { PAGE_QUERY, PAGES_QUERY } from '@/sanity/lib/queries'
 import { PortableTextComponents } from '@/components/PortableTextComponents'
 
 type Props = {
   params: Promise<{ slug: string }>
 }
 
+export async function generateStaticParams() {
+  const pages = await client.fetch(PAGES_QUERY)
+  return pages.map((page: any) => ({
+    slug: page.slug.current,
+  }))
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const post = await client.fetch(POST_QUERY, { slug })
+  const page = await client.fetch(PAGE_QUERY, { slug })
   
-  if (!post) {
-    return { title: 'Post Not Found' }
+  if (!page) {
+    return { title: 'Page Not Found' }
   }
 
   return {
-    title: post.title,
-    description: post.excerpt,
-    keywords: post.keywords,
-    authors: [{ name: post.author }],
+    title: page.title,
+    description: page.excerpt,
+    keywords: page.keywords,
     openGraph: {
-      type: 'article',
-      title: post.title,
-      description: post.excerpt,
-      url: `https://aaad.app/blog/${slug}`,
-      publishedTime: post.publishedAt,
-      authors: [post.author],
-      tags: post.keywords,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: post.title,
-      description: post.excerpt,
+      type: 'website',
+      title: page.title,
+      description: page.excerpt,
+      url: `https://aaad.app/${slug}`,
     },
     alternates: {
-      canonical: `https://aaad.app/blog/${slug}`,
+      canonical: `https://aaad.app/${slug}`,
     },
   }
-}
-
-export async function generateStaticParams() {
-  const posts = await client.fetch(POSTS_QUERY)
-  return posts.map((post: any) => ({
-    slug: post.slug.current,
-  }))
 }
 
 const AndroidIcon = () => (
@@ -57,11 +48,11 @@ const AndroidIcon = () => (
   </svg>
 )
 
-export default async function BlogPost({ params }: Props) {
+export default async function GenericPage({ params }: Props) {
   const { slug } = await params
-  const post = await client.fetch(POST_QUERY, { slug })
+  const page = await client.fetch(PAGE_QUERY, { slug })
 
-  if (!post) {
+  if (!page) {
     notFound()
   }
 
@@ -89,46 +80,13 @@ export default async function BlogPost({ params }: Props) {
 
       <article className="pt-32 pb-24 px-6">
         <div className="max-w-3xl mx-auto">
-          <nav className="mb-8" aria-label="Breadcrumb">
-            <ol className="flex items-center gap-2 text-sm text-gray-500">
-              <li><Link href="/" className="hover:text-[#3DDC84]">Home</Link></li>
-              <li>/</li>
-              <li><Link href="/blog" className="hover:text-[#3DDC84]">Blog</Link></li>
-              <li>/</li>
-              <li className="text-gray-400 truncate max-w-[200px]">{post.title}</li>
-            </ol>
-          </nav>
-
           <header className="mb-12">
-            <div className="mb-4">
-               {post.categories && post.categories.length > 0 && (
-                <span className="text-sm text-[#3DDC84] font-medium uppercase tracking-wider">{post.categories[0]}</span>
-               )}
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">{post.title}</h1>
-            <p className="text-xl text-gray-400 mb-6">{post.excerpt}</p>
-            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
-              <span>{post.author}</span>
-              {post.publishedAt && (
-                <>
-                <span>•</span>
-                <time dateTime={post.publishedAt}>{new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</time>
-                </>
-              )}
-            </div>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">{page.title}</h1>
+            {page.excerpt && <p className="text-xl text-gray-400 mb-6">{page.excerpt}</p>}
           </header>
 
           <div className="prose">
-            <PortableText value={post.body} components={PortableTextComponents} />
-          </div>
-
-          <div className="mt-12 pt-8 border-t border-white/10">
-            <h4 className="text-sm font-medium text-gray-500 mb-4">Related Topics</h4>
-            <div className="flex flex-wrap gap-2">
-              {post.keywords && post.keywords.slice(0, 6).map((keyword: string) => (
-                <span key={keyword} className="px-3 py-1 rounded-lg text-sm bg-white/5 text-gray-400">{keyword}</span>
-              ))}
-            </div>
+            <PortableText value={page.body} components={PortableTextComponents} />
           </div>
 
           <div className="mt-12 card !p-8 text-center relative overflow-hidden">
@@ -141,21 +99,6 @@ export default async function BlogPost({ params }: Props) {
           </div>
         </div>
       </article>
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Article',
-            headline: post.title,
-            description: post.excerpt,
-            datePublished: post.publishedAt,
-            author: { '@type': 'Person', name: post.author },
-            publisher: { '@type': 'Organization', name: 'AAAD', url: 'https://aaad.app' }
-          })
-        }}
-      />
 
       <footer className="py-12 px-6 border-t border-white/5">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">

@@ -165,4 +165,3 @@ This document outlines target keywords and content ideas for search engine optim
 ### Tools
 - Google Search Console
 - Google Analytics
-- Ahrefs/SEMrush (for competitor analysis)
