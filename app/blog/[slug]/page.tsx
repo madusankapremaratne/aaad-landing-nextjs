@@ -45,10 +45,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  const posts = await client.fetch(POSTS_QUERY)
-  return posts.map((post: any) => ({
-    slug: post.slug.current,
-  }))
+  try {
+    const posts = await client.fetch(POSTS_QUERY)
+    return posts.map((post: any) => ({
+      slug: post.slug.current,
+    }))
+  } catch (error) {
+    console.error('Error fetching posts:', error)
+    return []
+  }
 }
 
 const AndroidIcon = () => (

@@ -12,10 +12,15 @@ type Props = {
 }
 
 export async function generateStaticParams() {
-  const pages = await client.fetch(PAGES_QUERY)
-  return pages.map((page: any) => ({
-    slug: page.slug.current,
-  }))
+  try {
+    const pages = await client.fetch(PAGES_QUERY)
+    return pages.map((page: any) => ({
+      slug: page.slug.current,
+    }))
+  } catch (error) {
+    console.error('Error fetching pages:', error)
+    return []
+  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

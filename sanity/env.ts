@@ -15,7 +15,8 @@ export const useCdn = false
 
 function assertValue<T>(v: T | undefined, errorMessage: string): T {
     if (v === undefined) {
-        throw new Error(errorMessage)
+        console.warn(errorMessage)
+        return '' as unknown as T
     }
     return v
 }
