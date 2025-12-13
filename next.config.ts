@@ -3,15 +3,18 @@ import type { NextConfig } from 'next'
 const nextConfig: NextConfig = {
   // Enable static exports for better SEO
   output: 'export',
-  
+
   // Optimize images
   images: {
     unoptimized: true,
   },
-  
+
+  // Fix for jsdom/isomorphic-dompurify in Sanity Studio
+  serverExternalPackages: ['jsdom', 'isomorphic-dompurify'],
+
   // Trailing slashes for consistent URLs
   trailingSlash: true,
-  
+
   // Generate sitemap
   async headers() {
     return [

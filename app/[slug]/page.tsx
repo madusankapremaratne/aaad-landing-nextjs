@@ -14,36 +14,44 @@ type Props = {
 export async function generateStaticParams() {
   try {
     const pages = await client.fetch(PAGES_QUERY)
+    if (!pages || pages.length === 0) {
+      console.warn('No pages found in Sanity. Generating fallback page to satisfy build.')
+      return [{ slug: 'about' }]
+    }
     return pages.map((page: any) => ({
       slug: page.slug.current,
     }))
   } catch (error) {
     console.error('Error fetching pages:', error)
-    return []
+    return [{ slug: 'about' }]
   }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const page = await client.fetch(PAGE_QUERY, { slug })
-  
-  if (!page) {
-    return { title: 'Page Not Found' }
-  }
+  try {
+    const page = await client.fetch(PAGE_QUERY, { slug })
+    
+    if (!page) {
+      return { title: 'Page Not Found' }
+    }
 
-  return {
-    title: page.title,
-    description: page.excerpt,
-    keywords: page.keywords,
-    openGraph: {
-      type: 'website',
+    return {
       title: page.title,
       description: page.excerpt,
-      url: `https://aaad.app/${slug}`,
-    },
-    alternates: {
-      canonical: `https://aaad.app/${slug}`,
-    },
+      keywords: page.keywords,
+      openGraph: {
+        type: 'website',
+        title: page.title,
+        description: page.excerpt,
+        url: `https://aaad.app/${slug}`,
+      },
+      alternates: {
+        canonical: `https://aaad.app/${slug}`,
+      },
+    }
+  } catch (error) {
+    return { title: 'Error' }
   }
 }
 
@@ -55,9 +63,17 @@ const AndroidIcon = () => (
 
 export default async function GenericPage({ params }: Props) {
   const { slug } = await params
-  const page = await client.fetch(PAGE_QUERY, { slug })
+  let page = null
+  
+  try {
+    page = await client.fetch(PAGE_QUERY, { slug })
+  } catch (e) {
+    console.error('Error fetching page content:', e)
+  }
 
   if (!page) {
+    // If it's the fallback page and data is missing, show 404 but don't crash build if possible?
+    // standard notFound() is nice.
     notFound()
   }
 
