@@ -3,6 +3,8 @@ import type { Metadata } from 'next'
 import { client } from '@/sanity/lib/client'
 import { POSTS_QUERY } from '@/sanity/lib/queries'
 
+export const revalidate = 60
+
 export const metadata: Metadata = {
   title: 'Blog - Android Auto Tips, Guides & News',
   description: 'Learn how to install third-party apps on Android Auto, troubleshooting guides, app reviews, and the latest news about Android Auto customization.',
@@ -36,7 +38,7 @@ const AndroidIcon = () => (
 )
 
 export default async function BlogPage() {
-  const posts = await client.fetch(POSTS_QUERY, {}, { next: { revalidate: 0 } })
+  const posts = await client.fetch(POSTS_QUERY)
 
   const featuredPosts = posts.filter((p: any) => p.featured)
   const regularPosts = posts.filter((p: any) => !p.featured)

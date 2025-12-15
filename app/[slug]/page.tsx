@@ -7,13 +7,15 @@ import { client } from '@/sanity/lib/client'
 import { PAGE_QUERY, PAGES_QUERY } from '@/sanity/lib/queries'
 import { PortableTextComponents } from '@/components/PortableTextComponents'
 
+export const revalidate = 60
+
 type Props = {
   params: Promise<{ slug: string }>
 }
 
 export async function generateStaticParams() {
   try {
-    const pages = await client.fetch(PAGES_QUERY, {}, { next: { revalidate: 0 } })
+    const pages = await client.fetch(PAGES_QUERY)
     if (!pages || pages.length === 0) {
       console.warn('No pages found in Sanity. Generating fallback page to satisfy build.')
       return [{ slug: 'about' }]
@@ -30,7 +32,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   try {
-    const page = await client.fetch(PAGE_QUERY, { slug }, { next: { revalidate: 0 } })
+    const page = await client.fetch(PAGE_QUERY, { slug })
     
     if (!page) {
       return { title: 'Page Not Found' }
@@ -66,7 +68,7 @@ export default async function GenericPage({ params }: Props) {
   let page = null
   
   try {
-    page = await client.fetch(PAGE_QUERY, { slug }, { next: { revalidate: 0 } })
+    page = await client.fetch(PAGE_QUERY, { slug })
   } catch (e) {
     console.error('Error fetching page content:', e)
   }
