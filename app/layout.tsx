@@ -1,6 +1,10 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 import './globals.css'
+
+export const viewport: Viewport = {
+  themeColor: '#3DDC84',
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://aaad.app'),
@@ -72,6 +76,17 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://aaad.app',
   },
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
+  manifest: '/site.webmanifest',
   category: 'technology',
   classification: 'Android Apps',
   other: {
@@ -86,13 +101,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#3DDC84" />
-        
+      <body className="antialiased noise-bg grid-pattern">
         {/* Structured Data - Organization */}
         <script
           type="application/ld+json"
@@ -137,8 +146,6 @@ export default function RootLayout({
             })
           }}
         />
-      </head>
-      <body className="antialiased noise-bg grid-pattern">
         {children}
         
         {/* Google Analytics */}
