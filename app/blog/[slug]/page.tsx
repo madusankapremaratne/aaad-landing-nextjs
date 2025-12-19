@@ -85,6 +85,7 @@ export default async function BlogPost({ params }: Props) {
           <div className="hidden md:flex items-center gap-8">
             <Link href="/#features" className="text-gray-400 hover:text-white transition-colors">Features</Link>
             <Link href="/#apps" className="text-gray-400 hover:text-white transition-colors">Apps</Link>
+            <Link href="/install" className="text-gray-400 hover:text-white transition-colors">Install Guide</Link>
             <Link href="/#faq" className="text-gray-400 hover:text-white transition-colors">FAQ</Link>
             <Link href="/blog" className="text-white font-medium">Blog</Link>
           </div>

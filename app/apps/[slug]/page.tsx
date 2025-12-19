@@ -82,6 +82,7 @@ export default async function AppParams({ params }: Props) {
           <div className="hidden md:flex items-center gap-8">
             <Link href="/#features" className="text-gray-400 hover:text-white transition-colors">Features</Link>
             <Link href="/#apps" className="text-gray-400 hover:text-white transition-colors">Apps</Link>
+            <Link href="/install" className="text-gray-400 hover:text-white transition-colors">Install Guide</Link>
             <Link href="/#faq" className="text-gray-400 hover:text-white transition-colors">FAQ</Link>
             <Link href="/blog" className="text-gray-400 hover:text-white transition-colors">Blog</Link>
           </div>
@@ -119,7 +120,7 @@ export default async function AppParams({ params }: Props) {
                <a href="/AAAD-2.6.1-aaad.app-Release.apk" className="btn-primary">
                 Download via AAAD
                </a>
-               <Link href="#installation" className="px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all font-medium">
+               <Link href="/install" className="px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all font-medium">
                  Installation Guide
                </Link>
             </div>
