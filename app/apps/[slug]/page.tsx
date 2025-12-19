@@ -85,7 +85,7 @@ export default async function AppParams({ params }: Props) {
             <Link href="/#faq" className="text-gray-400 hover:text-white transition-colors">FAQ</Link>
             <Link href="/blog" className="text-gray-400 hover:text-white transition-colors">Blog</Link>
           </div>
-          <a href="https://github.com/shmykelsa/AAAD/releases" target="_blank" rel="noopener noreferrer" className="btn-primary !py-3 !px-6">
+          <a href="/AAAD-2.6.1-aaad.app-Release.apk" className="btn-primary !py-3 !px-6">
             Download
           </a>
         </div>
@@ -116,7 +116,7 @@ export default async function AppParams({ params }: Props) {
               {app.excerpt}
             </p>
             <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-               <a href="https://github.com/shmykelsa/AAAD/releases" target="_blank" rel="noopener noreferrer" className="btn-primary">
+               <a href="/AAAD-2.6.1-aaad.app-Release.apk" className="btn-primary">
                 Download via AAAD
                </a>
                <Link href="#installation" className="px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all font-medium">
@@ -231,7 +231,7 @@ export default async function AppParams({ params }: Props) {
              <div className="mt-16 text-center py-16 px-4 bg-gradient-to-b from-transparent to-[#3DDC84]/5 rounded-3xl border border-white/5">
                 <h2 className="text-3xl font-bold mb-4">Enhance Your Android Auto Experience</h2>
                 <p className="text-gray-400 mb-8 max-w-xl mx-auto">Get access to {app.title} and many other exclusive apps by downloading AAAD today.</p>
-                <a href="https://github.com/shmykelsa/AAAD/releases" target="_blank" rel="noopener noreferrer" className="btn-primary inline-flex items-center gap-2">
+                <a href="/AAAD-2.6.1-aaad.app-Release.apk" className="btn-primary inline-flex items-center gap-2">
                   <AndroidIcon />
                   Download Free
                 </a>

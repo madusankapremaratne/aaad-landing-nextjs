@@ -15,7 +15,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const post = await client.fetch(POST_QUERY, { slug })
+  const post = await client.fetch(POST_QUERY, { slug }, { next: { revalidate: 60 } })
   
   if (!post) {
     return { title: 'Post Not Found' }
@@ -66,7 +66,7 @@ const AndroidIcon = () => (
 
 export default async function BlogPost({ params }: Props) {
   const { slug } = await params
-  const post = await client.fetch(POST_QUERY, { slug })
+  const post = await client.fetch(POST_QUERY, { slug }, { next: { revalidate: 60 } })
 
   if (!post) {
     notFound()
@@ -88,7 +88,7 @@ export default async function BlogPost({ params }: Props) {
             <Link href="/#faq" className="text-gray-400 hover:text-white transition-colors">FAQ</Link>
             <Link href="/blog" className="text-white font-medium">Blog</Link>
           </div>
-          <a href="https://github.com/shmykelsa/AAAD/releases" target="_blank" rel="noopener noreferrer" className="btn-primary !py-3 !px-6">
+          <a href="/AAAD-2.6.1-aaad.app-Release.apk" className="btn-primary !py-3 !px-6">
             Download
           </a>
         </div>
@@ -143,7 +143,7 @@ export default async function BlogPost({ params }: Props) {
             <div className="relative z-10">
               <h3 className="text-2xl font-bold mb-4">Ready to Try AAAD?</h3>
               <p className="text-gray-400 mb-6">Download AAAD and start installing third-party apps on Android Auto today.</p>
-              <a href="https://github.com/shmykelsa/AAAD/releases" target="_blank" rel="noopener noreferrer" className="btn-primary inline-block">Download AAAD</a>
+              <a href="/AAAD-2.6.1-aaad.app-Release.apk" className="btn-primary inline-block">Download AAAD</a>
             </div>
           </div>
         </div>
@@ -170,7 +170,7 @@ export default async function BlogPost({ params }: Props) {
           <div className="flex items-center gap-6 text-gray-500 text-sm">
             <Link href="/" className="hover:text-[#3DDC84] transition-colors">Home</Link>
             <Link href="/blog" className="hover:text-[#3DDC84] transition-colors">Blog</Link>
-            <a href="https://github.com/shmykelsa/AAAD" className="hover:text-[#3DDC84] transition-colors">GitHub</a>
+            <a href="https://github.com/shmykelsa/AAAD" rel="nofollow" className="hover:text-[#3DDC84] transition-colors">GitHub</a>
           </div>
         </div>
       </footer>

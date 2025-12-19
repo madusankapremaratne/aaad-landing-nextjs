@@ -38,7 +38,7 @@ const AndroidIcon = () => (
 )
 
 export default async function BlogPage() {
-  const posts = await client.fetch(POSTS_QUERY)
+  const posts = await client.fetch(POSTS_QUERY, {}, { next: { revalidate: 60 } })
 
   const featuredPosts = posts.filter((p: any) => p.featured)
   const regularPosts = posts.filter((p: any) => !p.featured)
@@ -61,9 +61,7 @@ export default async function BlogPage() {
             <Link href="/blog" className="text-white font-medium">Blog</Link>
           </div>
           <a
-            href="https://github.com/shmykelsa/AAAD/releases"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/AAAD-2.6.1-aaad.app-Release.apk"
             className="btn-primary !py-3 !px-6"
           >
             Download
@@ -195,7 +193,7 @@ export default async function BlogPage() {
           <div className="flex items-center gap-6 text-gray-500 text-sm">
             <Link href="/" className="hover:text-[#3DDC84] transition-colors">Home</Link>
             <Link href="/blog" className="hover:text-[#3DDC84] transition-colors">Blog</Link>
-            <a href="https://github.com/shmykelsa/AAAD" className="hover:text-[#3DDC84] transition-colors">GitHub</a>
+            <a href="https://github.com/shmykelsa/AAAD" rel="nofollow" className="hover:text-[#3DDC84] transition-colors">GitHub</a>
           </div>
         </div>
       </footer>

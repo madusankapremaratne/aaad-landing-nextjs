@@ -129,9 +129,7 @@ export default function Home() {
             <Link href="/blog" className="text-gray-400 hover:text-white transition-colors">Blog</Link>
           </div>
           <a
-            href="https://github.com/shmykelsa/AAAD/releases"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/AAAD-2.6.1-aaad.app-Release.apk"
             className="btn-primary flex items-center gap-2 !py-3 !px-6"
           >
             <DownloadIcon />
@@ -147,7 +145,7 @@ export default function Home() {
             <div className="relative z-10">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#3DDC84]/10 border border-[#3DDC84]/20 mb-6 animate-fade-in">
                 <span className="w-2 h-2 rounded-full bg-[#3DDC84] animate-pulse" />
-                <span className="text-sm text-[#3DDC84]">Version 2.4.3 • Active since 2021</span>
+                <span className="text-sm text-[#3DDC84]">Version 2.6.1 • Active since 2021</span>
               </div>
               
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight animate-slide-up">
@@ -161,9 +159,7 @@ export default function Home() {
 
               <div className="flex flex-wrap gap-4 mb-8 animate-slide-up delay-200">
                 <a
-                  href="https://github.com/shmykelsa/AAAD/releases"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/AAAD-2.6.1-aaad.app-Release.apk"
                   className="btn-primary flex items-center gap-3"
                 >
                   <DownloadIcon />
@@ -172,12 +168,17 @@ export default function Home() {
                 <a
                   href="https://github.com/shmykelsa/AAAD"
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener noreferrer nofollow"
                   className="btn-secondary flex items-center gap-3"
                 >
                   <GitHubIcon />
                   View on GitHub
                 </a>
+              </div>
+
+              <div className="mb-8 p-3 rounded-lg bg-white/5 border border-white/10 text-xs text-gray-400 font-mono break-all animate-slide-up delay-200">
+                <span className="text-[#3DDC84] font-bold block mb-1">SHA-256 Checksum:</span>
+                b08888f75b2b1289ab2e9cbd363749ca51bd67230c59dbaf74d72fedc8e89e32
               </div>
 
               <div className="flex items-center gap-6 text-sm text-gray-500 animate-slide-up delay-300">
@@ -337,9 +338,7 @@ export default function Home() {
           <div className="text-center mt-12">
             <p className="text-gray-500 mb-4">And many more apps available in AAAD!</p>
             <a
-              href="https://github.com/shmykelsa/AAAD/releases"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/AAAD-2.6.1-aaad.app-Release.apk"
               className="btn-primary inline-flex items-center gap-2"
             >
               <DownloadIcon />
@@ -419,13 +418,11 @@ export default function Home() {
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <a
-                  href="https://github.com/shmykelsa/AAAD/releases"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/AAAD-2.6.1-aaad.app-Release.apk"
                   className="btn-primary flex items-center gap-2"
                 >
                   <DownloadIcon />
-                  Download from GitHub
+                  Download from Server
                 </a>
                 <a
                   href="https://t.me/AAADupdates"
@@ -461,8 +458,8 @@ export default function Home() {
             <div>
               <h4 className="font-bold mb-4">Links</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="https://github.com/shmykelsa/AAAD/releases" className="hover:text-[#3DDC84] transition-colors">Download</a></li>
-                <li><a href="https://github.com/shmykelsa/AAAD" className="hover:text-[#3DDC84] transition-colors">GitHub</a></li>
+                <li><a href="/AAAD-2.6.1-aaad.app-Release.apk" className="hover:text-[#3DDC84] transition-colors">Download</a></li>
+                <li><a href="https://github.com/shmykelsa/AAAD" rel="nofollow" className="hover:text-[#3DDC84] transition-colors">GitHub</a></li>
                 <li><a href="https://github.com/shmykelsa/AAAD/wiki" className="hover:text-[#3DDC84] transition-colors">Wiki</a></li>
               </ul>
             </div>
