@@ -21,7 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = 'https://aaad.app'
 
     // Fetch data from Sanity
-    const { posts, pages } = await client.fetch(SITEMAP_QUERY, {}, { next: { revalidate: 60 } })
+    const { posts, pages } = await client.fetch(SITEMAP_QUERY, {}, { next: { revalidate: 60, tags: ['post', 'page'] } })
 
     // Static routes
     const staticRoutes: MetadataRoute.Sitemap = [

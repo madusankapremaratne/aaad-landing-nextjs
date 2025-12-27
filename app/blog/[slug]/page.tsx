@@ -15,7 +15,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const post = await client.fetch(POST_QUERY, { slug }, { next: { revalidate: 60 } })
+  const post = await client.fetch(POST_QUERY, { slug }, { next: { revalidate: 60, tags: ['post'] } })
   
   if (!post) {
     return { title: 'Post Not Found' }
@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export async function generateStaticParams() {
   try {
-    const posts = await client.fetch(POSTS_QUERY)
+    const posts = await client.fetch(POSTS_QUERY, {}, { next: { tags: ['post'] } })
     return posts.map((post: any) => ({
       slug: post.slug.current,
     }))
@@ -66,7 +66,7 @@ const AndroidIcon = () => (
 
 export default async function BlogPost({ params }: Props) {
   const { slug } = await params
-  const post = await client.fetch(POST_QUERY, { slug }, { next: { revalidate: 60 } })
+  const post = await client.fetch(POST_QUERY, { slug }, { next: { revalidate: 60, tags: ['post'] } })
 
   if (!post) {
     notFound()
